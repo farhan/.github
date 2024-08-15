@@ -18,12 +18,12 @@ on:
         required: true
         default: "'repo1'"
       issue_title:
-        description: "Issue title"
+        description: "Issue title. WARNING: Replace all ` with \`"
         type: string
         required: true
         default: "Issue title"
       issue_description:
-        description: "Issue description"
+        description: "Issue description. WARNING: Replace all ` with \`"
         type: string
         required: true
         default: "Issue description"
