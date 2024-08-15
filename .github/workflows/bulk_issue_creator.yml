@@ -83,7 +83,7 @@ jobs:
         run: |
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
-          labels=${{ github.event.inputs.issue_labels }}
+          labels="${{ github.event.inputs.issue_labels }}"
           echo "labels: $labels"
           labels_array=($labels)
           echo "labels_array: $labels_array"
