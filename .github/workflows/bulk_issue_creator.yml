@@ -85,8 +85,12 @@ jobs:
           echo ${{ github.event.inputs.issue_title }}
           echo ${{ github.event.inputs.issue_description }}
           echo "----"
-          issue_title=$(echo ${{ github.event.inputs.issue_title }} | sed 's/`/\\`/g')
-          issue_body=$(echo ${{ github.event.inputs.issue_description }} | sed 's/`/\\`/g')
+          issue_title=$({{ github.event.inputs.issue_title }} | sed 's/`/\\`/g')
+          echo $issue_title
+          echo "----"
+          issue_title=$(sed 's/`/\\`/g' <<< ${{ github.event.inputs.issue_title }})
+          echo $issue_title
+          echo "----"
           labels_string=["${{ github.event.inputs.issue_labels }}"]
           labels_array=$(echo "$labels_string" | sed "s/'/\"/g" | jq -c .)
           echo "issue_title: $issue_title"
