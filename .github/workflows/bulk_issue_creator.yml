@@ -16,11 +16,11 @@ on:
         type: string
         required: true
       issue_title:
-        description: "Issue title. WARNING: Replace all ` with \`"
+        description: 'Issue title. WARNING: Replace all ` with \`'
         type: string
         required: true
       issue_description:
-        description: "Issue description. WARNING: Replace all ` with \`"
+        description: 'Issue description. WARNING: Replace all ` with \`'
         type: string
         required: true
       issue_labels:
