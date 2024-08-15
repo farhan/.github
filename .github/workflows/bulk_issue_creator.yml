@@ -83,12 +83,8 @@ jobs:
         run: |
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
-          labels="${{ github.event.inputs.issue_labels }}"
-          echo "labels: $labels"
-          labels_array=$(echo $labels | jq -R 'split(",")')
-          echo "labels_array: $labels_array"
-          labels_json=$(jq -n --argjson labels "$(printf '%s\n' "${labels_array[@]}" | jq -R . | jq -s .)" '{labels: $labels}')
-          echo "labels_json: $labels_json"
+          echo "[${{github.event.inputs.repos_list}}]"
+          echo fromJson("[${{github.event.inputs.repos_list}}]")
 
           # Curl api call to create issue
           response=$(curl -s -X POST \
