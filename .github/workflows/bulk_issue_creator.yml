@@ -82,8 +82,8 @@ jobs:
       - name: Create Issue in ${{ matrix.repo }}
         run: |
           # Safely handle issue title and body
-          issue_title=$(echo "${{ github.event.inputs.issue_title }}" | jq -Rs .)
-          issue_body=$(echo "${{ github.event.inputs.issue_description }}" | jq -Rs .)
+          issue_title=$(echo "${{ github.event.inputs.issue_title }}" | sed 's/`/\\`/g')
+          issue_body=$(echo "${{ github.event.inputs.issue_description }}" | sed 's/`/\\`/g')
           labels_string=["${{ github.event.inputs.issue_labels }}"]
           labels_array=$(echo "$labels_string" | sed "s/'/\"/g" | jq -c .)
           echo "issue_title: $issue_title"
