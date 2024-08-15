@@ -83,7 +83,7 @@ jobs:
         run: |
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
-          labels=${{ fromJson(join(',', github.event.inputs.issue_labels)) }}
+          labels=[${{github.event.inputs.issue_labels}}]
           echo "labels: $labels"
 
           # Curl api call to create issue
@@ -91,7 +91,7 @@ jobs:
           -H "Authorization: token ${{ secrets.REQUIREMENTS_BOT_GITHUB_TOKEN }}" \
           -H "Accept: application/vnd.github+json" \
           https://api.github.com/repos/${{ github.event.inputs.organization }}/${{ matrix.repo }}/issues \
-          -d "{ \"title\": \"$issue_title\", \"body\": \"$issue_body\", \"labels\": $labels_array }")
+          -d "{ \"title\": \"$issue_title\", \"body\": \"$issue_body\", \"labels\": $labels }")
 
           echo "Issue creation API response:"
           echo "$response" | jq .  # Pretty print the response
