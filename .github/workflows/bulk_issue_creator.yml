@@ -84,6 +84,8 @@ jobs:
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
           labels=fromJson(${{ github.event.inputs.issue_labels }})
+          echo "labels: $labels"
+          echo "labels_json: \"labels\""
 
           # Curl api call to create issue
           response=$(curl -s -X POST \
