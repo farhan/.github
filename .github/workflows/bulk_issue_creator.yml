@@ -84,7 +84,7 @@ jobs:
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
           labels_string=["${{github.event.inputs.issue_labels}}"]
-          labels_array=$(echo "$v1" | sed "s/'/\"/g" | jq -c .)
+          labels_array=$(echo "$labels_string" | sed "s/'/\"/g" | jq -c .)
 
           # Curl api call to create issue
           response=$(curl -s -X POST \
