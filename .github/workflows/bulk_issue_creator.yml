@@ -83,7 +83,10 @@ jobs:
         run: |
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
-          labels_json=jq --compact-output --null-input '[${{github.event.inputs.issue_labels}}]' --args -- "${X[@]}"
+          v1=${{github.event.inputs.issue_labels}}
+          echo 'v1: $v1'
+          v2=[$v1]
+          echo 'v2: $v2'
 
           # Curl api call to create issue
           response=$(curl -s -X POST \
