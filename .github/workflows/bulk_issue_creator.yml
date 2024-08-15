@@ -83,8 +83,9 @@ jobs:
         run: |
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
-          v2=["${{github.event.inputs.issue_labels}}"]
-          echo "v2: $v2"
+          v1=["${{github.event.inputs.issue_labels}}"]
+          v1="['bug', 'maintenance']"
+          v2=$(echo "$v1" | sed "s/'/\"/g" | jq -c .)
 
           check_type() {
             local var_name=$1
