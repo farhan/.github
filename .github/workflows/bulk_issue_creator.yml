@@ -7,7 +7,6 @@ on:
         description: "Github organization for the listed repos"
         type: choice
         required: true
-        default: farhan-test-org
         options:
           - openedx
           - edx
@@ -16,17 +15,14 @@ on:
         description: "List of repositories in the format 'x', 'y', 'z'..."
         type: string
         required: true
-        default: "'repo1'"
       issue_title:
         description: "Issue title. WARNING: Replace all ` with \`"
         type: string
         required: true
-        default: "Issue title"
       issue_description:
         description: "Issue description. WARNING: Replace all ` with \`"
         type: string
         required: true
-        default: "Issue description"
       issue_labels:
         description: "List of labels in the format 'x', 'y', 'z'..."
         type: string
