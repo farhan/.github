@@ -83,8 +83,8 @@ jobs:
         run: |
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
-          echo "[${{github.event.inputs.repos_list}}]"
-          echo fromJson("[${{github.event.inputs.repos_list}}]")
+          echo "[${{github.event.inputs.issue_labels}}]"
+          echo "$fromJson("[${{github.event.inputs.issue_labels}}]")"
 
           # Curl api call to create issue
           response=$(curl -s -X POST \
