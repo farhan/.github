@@ -35,7 +35,7 @@ jobs:
       - name: Create issue list files
         run: |
           # Add headers in the files
-          echo "Organization, Repository, Issue Url, Issue Created" > issue_list.csv
+          echo "Organization, Repository, Issue Created, Issue Url" > issue_list.csv
           echo "---------------------------------------------------------------------" > issue_list.txt
           echo "List of issues created in the relevant repos." >> issue_list.txt
           echo "Output is in the tasks list format to directly copy them in git epic " >> issue_list.txt
@@ -85,13 +85,13 @@ jobs:
           issue_url=$(echo "$response" | jq -r '.html_url')
           if [ "$issue_url" == "null" ]; then
             echo "Error: 'html_url' field not found in response"
-            echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, $issue_url, No" >> issue_list.csv
+            echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, No, $issue_url" >> issue_list.csv
             exit 1
           fi
 
           echo "Issue url: $issue_url"
           # Append the issue to the issue list files
-          echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, $issue_url, Yes" >> issue_list.csv
+          echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, Yes, $issue_url" >> issue_list.csv
           echo "- [ ] ${{ matrix.repo }} $issue_url" >> issue_list.txt
 
       - name: Upload updated issue list files
