@@ -89,14 +89,14 @@ jobs:
           issue_url=$(echo "$response" | jq -r '.html_url')
           if [ "$issue_url" == "null" ]; then
             echo "Error: 'html_url' field not found in response"
-            echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, 'No', $issue_url" >> issue_list.csv
+            echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, \"No\", " >> issue_list.csv
             cat '.github/workflows/bulk_issue_creator.json'
             exit 1
           fi
 
           echo "Issue url: $issue_url"
           # Append the issue to the issue list files
-          echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, 'Yes', $issue_url" >> issue_list.csv
+          echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, \"Yes\", $issue_url" >> issue_list.csv
           echo "- [ ] ${{ matrix.repo }} $issue_url" >> issue_list.txt
 
       - name: Upload updated issue list files
