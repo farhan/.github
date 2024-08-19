@@ -7,6 +7,7 @@ on:
         description: "Github organization for the listed repos"
         type: choice
         required: true
+        default: farhan-test-org
         options:
           - openedx
           - edx
@@ -77,7 +78,6 @@ jobs:
           name: issues-artifact
       - name: Create Issue in ${{ matrix.repo }}
         run: |
-          # Safely handle issue title and body
           issue_title="${{ github.event.inputs.issue_title }}"
           issue_body="${{ github.event.inputs.issue_description }}"
           labels_string=["${{ github.event.inputs.issue_labels }}"]
