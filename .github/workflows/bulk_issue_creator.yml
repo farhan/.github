@@ -118,6 +118,7 @@ jobs:
   finalize_issues_list:
     runs-on: ubuntu-20.04
     needs: [ bulk_issue_creation ]
+    if: always()
     steps:
       - name: Download issues-artifact
         uses: actions/download-artifact@v3
