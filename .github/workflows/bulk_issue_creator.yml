@@ -68,6 +68,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Create Issue in ${{ matrix.repo }}
         run: |
+          cat '.github/workflows/bulk_issue_creator.json'
           data=$(cat '.github/workflows/bulk_issue_creator.json')
           echo "data: $data"
 
@@ -86,6 +87,7 @@ jobs:
           if [ "$issue_url" == "null" ]; then
             echo "Error: 'html_url' field not found in response"
             echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, No, $issue_url" >> issue_list.csv
+            cat '.github/workflows/bulk_issue_creator.json'
             exit 1
           fi
 
@@ -93,6 +95,7 @@ jobs:
           # Append the issue to the issue list files
           echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, Yes, $issue_url" >> issue_list.csv
           echo "- [ ] ${{ matrix.repo }} $issue_url" >> issue_list.txt
+          cat '.github/workflows/bulk_issue_creator.json'
 
       - name: Upload updated issue list files
         uses: actions/upload-artifact@v3
