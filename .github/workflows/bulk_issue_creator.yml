@@ -60,16 +60,14 @@ jobs:
         repo: ${{fromJson(needs.prepare_repos_list.outputs.repos_list)}}
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Download issues-artifact
         uses: actions/download-artifact@v3
         with:
           name: issues-artifact
-      - name: Print issue_list.csv
-        run: |
-          echo "Contents of issue_list.csv:"
-          cat issue_list.csv
-      - name: Checkout repository
-        uses: actions/checkout@v3
+
       - name: Create Issue in ${{ matrix.repo }}
         run: |
           data=$(cat '.github/workflows/bulk_issue_creator.json')
@@ -90,7 +88,6 @@ jobs:
           if [ "$issue_url" == "null" ]; then
             echo "Error: 'html_url' field not found in response"
             echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, \"No\", " >> issue_list.csv
-            cat '.github/workflows/bulk_issue_creator.json'
             exit 1
           fi
 
@@ -101,7 +98,6 @@ jobs:
 
       - name: Upload updated issue list files
         uses: actions/upload-artifact@v3
-        if: always()
         with:
           name: issues-artifact
           path: issue_list.*
@@ -115,10 +111,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: issues-artifact
-      - name: Print issue_list.csv
-        run: |
-          echo "Contents of issue_list.csv:"
-          cat issue_list.csv
+
       - name: Print list of created issues on console
         run: |
           # Add ending tag in the file
@@ -134,5 +127,5 @@ jobs:
 
       - name: How to download Artifact (Issues list files)
         run: |
-          echo "To download the artifact find 'Artifacts' secion on the summary page of the run:"
+          echo "To download the artifact find 'Artifacts' section on the summary page of the run:"
           echo "Summary page: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
