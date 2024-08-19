@@ -16,18 +16,6 @@ on:
         description: "List of repositories in the format 'x', 'y', 'z'..."
         type: string
         required: true
-      issue_title:
-        description: 'Issue title. WARNING: Replace all backticks (`) with escaped backticks (\`)'
-        type: string
-        required: true
-      issue_description:
-        description: 'Issue description. WARNING: Replace all backticks (`) with escaped backticks (\`)'
-        type: string
-        required: true
-      issue_labels:
-        description: "List of labels in the format 'x', 'y', 'z'..."
-        type: string
-        required: false
 
 jobs:
 
@@ -76,14 +64,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: issues-artifact
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Create Issue in ${{ matrix.repo }}
         run: |
-          issue_title="${{ github.event.inputs.issue_title }}"
-          issue_body="${{ github.event.inputs.issue_description }}"
-          labels_string=["${{ github.event.inputs.issue_labels }}"]
-          labels_array=$(echo "$labels_string" | sed "s/'/\"/g" | jq -c .)
-
-          data="{ \"title\": \"$issue_title\", \"body\": \"$issue_body\", \"labels\": $labels_array }"
+          data=$(cat '.github/workflows/bulk_issue_creator.json')
           echo "data: $data"
 
           # Curl api call to create issue
@@ -111,6 +96,7 @@ jobs:
 
       - name: Upload updated issue list files
         uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: issues-artifact
           path: issue_list.*
