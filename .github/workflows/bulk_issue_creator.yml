@@ -64,11 +64,14 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: issues-artifact
+      - name: Print issue_list.csv
+        run: |
+          echo "Contents of issue_list.csv:"
+          cat issue_list.csv
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Create Issue in ${{ matrix.repo }}
         run: |
-          cat issue_list.csv
           data=$(cat '.github/workflows/bulk_issue_creator.json')
           echo "data: $data"
 
@@ -95,7 +98,6 @@ jobs:
           # Append the issue to the issue list files
           echo "${{ github.event.inputs.organization }}, ${{ matrix.repo }}, Yes, $issue_url" >> issue_list.csv
           echo "- [ ] ${{ matrix.repo }} $issue_url" >> issue_list.txt
-          cat issue_list.csv
 
       - name: Upload updated issue list files
         uses: actions/upload-artifact@v3
