@@ -115,7 +115,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: issues-artifact
-
+      - name: Print issue_list.csv
+        run: |
+          echo "Contents of issue_list.csv:"
+          cat issue_list.csv
       - name: Print list of created issues on console
         run: |
           # Add ending tag in the file
